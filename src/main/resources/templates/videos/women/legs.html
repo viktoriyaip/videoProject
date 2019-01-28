@@ -1,0 +1,49 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+
+</head>
+<body>
+<header th:include="fragments/header"></header>
+<div>
+    <h4 class="text-center text-info text-uppercase">Leg Workouts</h4>
+</div>
+<br>
+<br>
+<div class="row mb-5 mx-auto">
+    <div class="col-lg-3 col-md-12">
+
+        <div class="embed-responsive embed-responsive-16by9 z-depth-1">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/fa3Iczgh8Ok" style="height: 101%"
+                    allowfullscreen></iframe>
+        </div>
+        <br>
+        <div class="form-group text-center">
+            <th:block th:if="${#request.session.getAttribute('userId')}">
+                <div class="checkbox checkbox-danger">
+                    <input id="checkbox6" type="checkbox">
+                    <label for="checkbox6">
+                        Add to Favourites
+                    </label>
+                </div>
+            </th:block>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+
+        <div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/fa3Iczgh8Ok" style="height: 101%"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+
+        <div class="embed-responsive embed-responsive-16by9 z-depth-2">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/fa3Iczgh8Ok" style="height: 101%"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+</body>
+<footer th:include="fragments/footer"></footer>
+</html>

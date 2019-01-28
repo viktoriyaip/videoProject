@@ -1,0 +1,36 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+
+</head>
+<body>
+
+<header th:include="fragments/header"></header>
+
+<div id="login">
+    <div class="container align-content-top">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <form id="login-form" class="form" th:action="@{/user/login}" th:method="POST">
+                        <h4 class="text-center text-info text-uppercase">Login</h4>
+                        <div class="form-group">
+                            <label for="username" class="text-info">Username:</label><br>
+                            <input type="text" name="username" id="username" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="text-info">Password:</label><br>
+                            <input type="password" name="password" id="password" class="form-control">
+                        </div>
+                        <div class="form-group text-center">
+                            <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<footer th:include="fragments/footer"></footer>
+</html>

@@ -1,0 +1,48 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+
+</head>
+<body>
+<header th:include="fragments/header"></header>
+
+<div id="login">
+    <div class="container align-content-top">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <form id="login-form" class="form" th:action="@{/videos/add}" th:method="POST" th:object="${videoModel}">
+                        <h4 class="text-center text-info text-uppercase">Add Video</h4>
+                        <div class="form-group">
+                            <label for="url" class="text-info">Copy Link Here:</label><br>
+                            <input type="url" name="url" id="url" class="form-control">
+                        </div>
+
+                        <div class="form-group row">
+                            <select class="form-control selectpicker" id="group" name="group">
+                                <option th:each="gr : ${groups}"
+                                        th:value="${gr}"
+                                        th:text="${gr}"
+                                />
+                            </select>
+                            <br>
+                            <br>
+                            <br>
+                            <select class="form-control selectpicker">
+                                <option>MEN</option>
+                                <option>WOMEN</option>
+                            </select>
+                        </div>
+                        <div class="form-group text-center">
+                            <input type="submit" name="submit" class="btn btn-info btn-md" value="add">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<footer th:include="fragments/footer"></footer>
+</html>

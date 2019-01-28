@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body>
+<header th:include="fragments/header"></header>
+<main>
+<div class="jumbotron">
+    <h1 class="display-4 center">Fitness Workouts</h1>
+    <hr class="my-4">
+    <p></p>
+    <th:block th:unless="${#request.session.getAttribute('userId')}">
+    <p class="lead center">
+        <a class="btn btn-primary btn-lg" th:href="@{user/register}" role="button">Register</a>
+    </p>
+    </th:block>
+</div>
+</main>
+</body>
+<footer th:include="fragments/footer"></footer>
+</html>
