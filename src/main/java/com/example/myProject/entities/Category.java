@@ -13,7 +13,7 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "category")
     Set<Video> videos;
 
     @Enumerated(EnumType.STRING)

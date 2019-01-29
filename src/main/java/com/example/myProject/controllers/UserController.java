@@ -103,7 +103,7 @@ public class UserController {
     public ModelAndView profile(ModelAndView modelAndView, HttpSession httpSession){
 
         httpSession.getAttribute("username");
-        modelAndView.setViewName("/user/profile");
+        modelAndView.setViewName("user/profile");
 
         return modelAndView;
     }

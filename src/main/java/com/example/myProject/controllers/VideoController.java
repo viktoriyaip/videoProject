@@ -2,7 +2,6 @@ package com.example.myProject.controllers;
 
 import com.example.myProject.bindingModel.VideoCreateBindingModel;
 import com.example.myProject.custom.PreAuthenticate;
-import com.example.myProject.entities.Category;
 import com.example.myProject.enums.MuscleGroups;
 import com.example.myProject.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,12 +55,12 @@ public class VideoController {
     public ModelAndView addVideoConfirmation(ModelAndView modelAndView,
                                              HttpSession httpSession,VideoCreateBindingModel videoCreateBindingModel){
 
+        videoService.createVideo(videoCreateBindingModel);
 
-        videoService.saveVideo(videoCreateBindingModel,httpSession.getAttribute("username").toString());
-
-
-        modelAndView.addObject("videoModel",new VideoCreateBindingModel());
-
+//        videoService.createVideo(videoCreateBindingModel);
+//        videoService.saveVideo(videoCreateBindingModel,httpSession.getAttribute("username").toString());
+//        modelAndView.addObject("videoModel",new VideoCreateBindingModel());
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 

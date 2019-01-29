@@ -5,6 +5,7 @@ import com.example.myProject.entities.Category;
 import com.example.myProject.entities.User;
 import com.example.myProject.entities.Video;
 import com.example.myProject.enums.MuscleGroups;
+import com.example.myProject.repositories.CategoryRepository;
 import com.example.myProject.repositories.VideoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,14 @@ public class VideoServiceImpl implements VideoService {
 
     UserService userService;
     VideoRepository repository;
+    CategoryRepository categoryRepository;
     ModelMapper modelMapper;
 
     @Autowired
-    public VideoServiceImpl(UserService userService, VideoRepository repository, ModelMapper modelMapper) {
+    public VideoServiceImpl(UserService userService, VideoRepository repository,CategoryRepository categoryRepository, ModelMapper modelMapper) {
         this.userService = userService;
         this.repository = repository;
+        this.categoryRepository = categoryRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -38,9 +41,17 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public Video findByCategory(Category category) {
-        return repository.findByCategory(category);
+    public void createVideo(VideoCreateBindingModel model) {
+        Video video = modelMapper.map(model, Video.class);
+        List<Category> videoGroup = categoryRepository.findAll();
+        for (Category category : videoGroup) {
+            if(category.getMuscleGroups().equals(model.getMuscleGroup())){
+                video.setCategory(category);
+            }
+        }
+        repository.save(video);
     }
+
 
     @Override
     public boolean saveVideo(VideoCreateBindingModel videoCreateBindingModel, String username) {

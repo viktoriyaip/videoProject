@@ -28,18 +28,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findById(Integer id) {
-        return repository.findById(id).orElse(null);
-    }
-
-    @Override
     public User findByUsername(String username) {
         return repository.findByUsername(username);
-    }
-
-    @Override
-    public User findByEmail(String email) {
-        return repository.findByEmail(email);
     }
 
     @Override
@@ -73,5 +63,8 @@ public class UserServiceImpl implements UserService{
         return user.getPassword().equals(userLoginBindingModel.getPassword());
     }
 
-
+    @Override
+    public Integer getUserId(UserLoginBindingModel user) {
+        return repository.findByUsername(user.getUsername()).getId();
+    }
 }

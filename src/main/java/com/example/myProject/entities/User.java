@@ -5,6 +5,7 @@ import com.example.myProject.enums.Role;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
@@ -27,6 +28,9 @@ public class User implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @ManyToMany
+    List<Video> videos;
 
     public  User(){
     }
@@ -86,5 +90,13 @@ public class User implements Serializable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
     }
 }

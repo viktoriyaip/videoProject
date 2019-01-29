@@ -14,15 +14,14 @@ public class Video implements Serializable {
     String url;
 
     @ManyToOne
-    private Category category;
+    @JoinColumn(name = "category_id")
+    Category category;
 
-    public Video(String url, Category category) {
-
+    public Video(String url) {
         this.url = url;
-        this.category = category;
     }
 
-    public Video(){
+    public Video() {
 
     }
 
@@ -40,6 +39,10 @@ public class Video implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Category getCategory() {

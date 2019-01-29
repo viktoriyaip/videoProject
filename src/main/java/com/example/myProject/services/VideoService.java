@@ -12,7 +12,7 @@ public interface VideoService {
 
     List<Video> findAll();
     Video findByUrl(String url);
-    Video findByCategory(Category category);
+    void createVideo(VideoCreateBindingModel model);
 
-    public boolean saveVideo(VideoCreateBindingModel videoCreateBindingModel, String username);
+    boolean saveVideo(VideoCreateBindingModel videoCreateBindingModel, String username);
 }

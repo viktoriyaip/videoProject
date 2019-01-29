@@ -8,13 +8,9 @@ import java.util.List;
 
 public interface UserService {
     List<User> findAll();
-
-    User findById(Integer id);
     User findByUsername(String username);
-    User findByEmail(String email);
-
     void registerUser(UserBindingModel userBindingModel);
     boolean checkIfUserExists(UserLoginBindingModel userLoginBindingModel);
     boolean checkIfPasswordMatches(UserLoginBindingModel userLoginBindingModel);
-
+    Integer getUserId(UserLoginBindingModel user);
 }
