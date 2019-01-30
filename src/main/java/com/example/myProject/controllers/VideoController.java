@@ -57,12 +57,59 @@ public class VideoController {
     @GetMapping("/women/{group}")
     public ModelAndView viewVideosWomen(@PathVariable(name = "group") String group, ModelAndView modelAndView){
 
-        List<String> womenVideos = videoService.videoByGenderAndMuscleGroup(group);
-        modelAndView.addObject("womenVideos",womenVideos);
+     //   List<String> womenVideos = videoService.videoByGenderAndMuscleGroup(group);
+
+        List<List<String>> videos = getVideosAsMatrix(videoService.videoByGenderAndMuscleGroup(group));
+
+        modelAndView.addObject("videos", videos);
 
         modelAndView.setViewName("videos/women/" + group);
 
         return modelAndView;
+    }
+
+    private List<List<String>> getVideosAsMatrix(List<String> videoByGenderAndMuscleGroup) {
+        List<List<String>> videos = new ArrayList<>();
+
+//        int i;
+//        while(videoByGenderAndMuscleGroup.get(i)) {
+//            List<String> row = new ArrayList<>();
+//            for (int j = 0; j < 3; j++) {
+//                row.add(videoByGenderAndMuscleGroup.get(i));
+//                i++;
+//            }
+//            videos.add(row);
+//
+//
+//        }
+        int i = videoByGenderAndMuscleGroup.size()/3;
+        int j = videoByGenderAndMuscleGroup.size()%3;
+        int p =0;
+
+        for (int k = 0; k < i; k++) {
+            List<String> row = new ArrayList<>();
+            for (int l = 0; l < 3 ; l++) {
+                row.add(videoByGenderAndMuscleGroup.get(p));
+                p++;
+            }
+            videos.add(row);
+        }
+        List<String> row = new ArrayList<>();
+        for (int k = j; k >0 ; k--) {
+            row.add(videoByGenderAndMuscleGroup.get(k));
+        }
+            videos.add(row);
+
+
+//        for (int i = 0; i < videoByGenderAndMuscleGroup.size() - 1; i+=3) {
+//            List<String> row = new ArrayList<>();
+//            row.add(videoByGenderAndMuscleGroup.get(i));
+//            row.add(videoByGenderAndMuscleGroup.get(i + 1));
+//            row.add(videoByGenderAndMuscleGroup.get(i + 2));
+//            videos.add(row);
+//        }
+
+        return videos;
     }
 
     @GetMapping("/men/{group}")
