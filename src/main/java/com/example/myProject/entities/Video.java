@@ -1,6 +1,7 @@
 package com.example.myProject.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @Entity

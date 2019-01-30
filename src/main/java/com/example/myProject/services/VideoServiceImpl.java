@@ -4,14 +4,14 @@ import com.example.myProject.bindingModel.VideoCreateBindingModel;
 import com.example.myProject.entities.Category;
 import com.example.myProject.entities.User;
 import com.example.myProject.entities.Video;
-import com.example.myProject.enums.MuscleGroups;
+import com.example.myProject.enums.Gender;
 import com.example.myProject.repositories.CategoryRepository;
 import com.example.myProject.repositories.VideoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,14 +44,14 @@ public class VideoServiceImpl implements VideoService {
     public void createVideo(VideoCreateBindingModel model) {
         Video video = modelMapper.map(model, Video.class);
         List<Category> videoGroup = categoryRepository.findAll();
+
         for (Category category : videoGroup) {
-            if(category.getMuscleGroups().equals(model.getMuscleGroup())){
+            if(category.getMuscleGroups().equals(model.getMuscleGroup()) && category.getGender().equals(model.getGender())){
                 video.setCategory(category);
             }
         }
         repository.save(video);
     }
-
 
     @Override
     public boolean saveVideo(VideoCreateBindingModel videoCreateBindingModel, String username) {
@@ -61,5 +61,19 @@ public class VideoServiceImpl implements VideoService {
         }
         Video videoEntity = modelMapper.map(videoCreateBindingModel, Video.class);
         return this.repository.save(videoEntity) != null;
+    }
+
+    @Override
+    public List<Video> videoByGenderAndMuscleGroup(String group) {
+        List<Video> videoWomen = new ArrayList<>();
+        List<Video> videos = repository.findAll();
+
+        for (Video video : videos) {
+            if (video.getCategory().getGender().equals(Gender.WOMEN) &&
+                    video.getCategory().getMuscleGroups().getDisplayName().equals(group)) {
+                videoWomen.add(video);
+            }
+        }
+        return videoWomen;
     }
 }

@@ -18,6 +18,12 @@
                     allowfullscreen></iframe>
         </div>
         <br>
+        <th:block th:each="womenVideo, iter : ${womenVideos}">
+            <div class="embed-responsive embed-responsive-16by9 z-depth-1">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/fa3Iczgh8Ok" style="height: 101%"
+                        allowfullscreen></iframe>
+            </div>
+        </th:block>
         <div class="form-group text-center">
             <th:block th:if="${#request.session.getAttribute('userId')}">
                 <div class="checkbox checkbox-danger">

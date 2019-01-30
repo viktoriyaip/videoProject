@@ -28,9 +28,14 @@
                             <br>
                             <br>
                             <br>
-                            <select class="form-control selectpicker">
-                                <option>MEN</option>
-                                <option>WOMEN</option>
+                            <select class="form-control selectpicker" id="gender" name="gender">
+                                <option th:each="gen : ${gender}"
+                                        th:value="${gen}"
+                                        th:text="${gen}"
+                                        />
+
+
+
                             </select>
                         </div>
                         <div class="form-group text-center">

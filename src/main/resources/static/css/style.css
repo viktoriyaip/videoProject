@@ -146,4 +146,12 @@ footer {
   width: 40%;
 }
 
+.page-bg {
+  background: url("../../images/logo.jpg");
+  position: relative;
+  min-height: 100%;
+  background-size: cover;
+  padding: 1em;
+}
+
 }

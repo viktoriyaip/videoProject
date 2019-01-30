@@ -1,5 +1,6 @@
 package com.example.myProject.entities;
 
+import com.example.myProject.enums.Gender;
 import com.example.myProject.enums.MuscleGroups;
 
 import javax.persistence.*;
@@ -19,17 +20,18 @@ public class Category implements Serializable {
     @Enumerated(EnumType.STRING)
     MuscleGroups muscleGroups;
 
+    @Enumerated(EnumType.STRING)
+    Gender gender;
 
-    public Category(Set<Video> videos, MuscleGroups muscleGroups) {
+    public Category(Set<Video> videos, MuscleGroups muscleGroups, Gender gender) {
         this.videos = videos;
         this.muscleGroups = muscleGroups;
+        this.gender = gender;
 
     }
-
     public Category(){
 
     }
-
 
     public Integer getId() {
         return id;
@@ -55,4 +57,11 @@ public class Category implements Serializable {
         this.muscleGroups = muscleGroups;
     }
 
-  }
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+}
