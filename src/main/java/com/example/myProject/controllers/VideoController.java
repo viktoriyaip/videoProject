@@ -57,10 +57,10 @@ public class VideoController {
     @GetMapping("/women/{group}")
     public ModelAndView viewVideosWomen(@PathVariable(name = "group") String group, ModelAndView modelAndView){
 
-        List<Video> womenVideos = videoService.videoByGenderAndMuscleGroup(group);
+        List<String> womenVideos = videoService.videoByGenderAndMuscleGroup(group);
         modelAndView.addObject("womenVideos",womenVideos);
 
-        modelAndView.setViewName("videos/women/legs");
+        modelAndView.setViewName("videos/women/" + group);
 
         return modelAndView;
     }
@@ -68,7 +68,7 @@ public class VideoController {
     @GetMapping("/men/{group}")
     public ModelAndView viewVideosMen(@PathVariable(name = "group") String group, ModelAndView modelAndView){
 
-        List<Video> menVideos = videoService.videoByGenderAndMuscleGroup(group);
+        List<String> menVideos = videoService.videoByGenderAndMuscleGroup(group);
         modelAndView.addObject("menVideos",menVideos);
 
         modelAndView.setViewName("videos/men/legs");

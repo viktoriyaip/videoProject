@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class VideoServiceImpl implements VideoService {
@@ -64,16 +66,27 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public List<Video> videoByGenderAndMuscleGroup(String group) {
-        List<Video> videoWomen = new ArrayList<>();
+    public List<String> videoByGenderAndMuscleGroup(String group) {
+        List<String> videoWomenUrl = new ArrayList<>();
+        List<String> embedUrl = new ArrayList<>();
         List<Video> videos = repository.findAll();
 
         for (Video video : videos) {
             if (video.getCategory().getGender().equals(Gender.WOMEN) &&
                     video.getCategory().getMuscleGroups().getDisplayName().equals(group)) {
-                videoWomen.add(video);
+               videoWomenUrl.add(video.getUrl());
             }
         }
-        return videoWomen;
+
+        Pattern pattern = Pattern.compile("[a-zA-Z0-9\\_\\-]+$");
+
+        for (String s : videoWomenUrl) {
+            Matcher matcher = pattern.matcher(s);
+            matcher.find();
+            embedUrl.add(matcher.group());
+        }
+
+
+        return embedUrl;
     }
 }
