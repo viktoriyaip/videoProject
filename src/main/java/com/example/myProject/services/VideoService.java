@@ -12,6 +12,9 @@ public interface VideoService {
     Video findByUrl(String url);
     void createVideo(VideoCreateBindingModel model);
     boolean saveVideo(VideoCreateBindingModel videoCreateBindingModel, String username);
-    List<String> videoByGenderAndMuscleGroup(String group);
+    List<String> videoByGenderAndMuscleGroupWomen(String group);
+    List<String> videoByGenderAndMuscleGroupMen(String group);
+    public void deleteVideo(Integer id);
 
+    Video findById(Integer id);
 }

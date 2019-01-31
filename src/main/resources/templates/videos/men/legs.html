@@ -6,14 +6,14 @@
 <body>
 <header th:include="fragments/header"></header>
 <div>
-    <h4 class="text-center text-info text-uppercase">Back Workouts</h4>
+    <h4 class="text-center text-info text-uppercase">Legs Workouts</h4>
 </div>
 <br>
 <br>
 <div class="container">
     <table class="table width-90 mx-auto table-hover">
         <tbody>
-        <th:block th:each="videoArr : ${videosWomen}">
+        <th:block th:each="videoArr : ${videosMen}">
             <tr class="row">
                 <th:block th:each="video : ${videoArr}">
                     <td class="col-md-4 text-center">

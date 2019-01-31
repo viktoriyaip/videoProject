@@ -66,7 +66,7 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public List<String> videoByGenderAndMuscleGroup(String group) {
+    public List<String> videoByGenderAndMuscleGroupWomen(String group) {
         List<String> videoWomenUrl = new ArrayList<>();
         List<String> embedUrl = new ArrayList<>();
         List<Video> videos = repository.findAll();
@@ -89,4 +89,44 @@ public class VideoServiceImpl implements VideoService {
 
         return embedUrl;
     }
+
+    @Override
+    public List<String> videoByGenderAndMuscleGroupMen(String group) {
+        List<String> videoWomenUrl = new ArrayList<>();
+        List<String> embedUrl = new ArrayList<>();
+        List<Video> videos = repository.findAll();
+
+        for (Video video : videos) {
+            if (video.getCategory().getGender().equals(Gender.MEN) &&
+                    video.getCategory().getMuscleGroups().getDisplayName().equals(group)) {
+                videoWomenUrl.add(video.getUrl());
+            }
+        }
+
+        Pattern pattern = Pattern.compile("[a-zA-Z0-9\\_\\-]+$");
+
+        for (String s : videoWomenUrl) {
+            Matcher matcher = pattern.matcher(s);
+            matcher.find();
+            embedUrl.add(matcher.group());
+        }
+
+
+        return embedUrl;
+    }
+
+    @Override
+    public void deleteVideo(Integer id) {
+        Video video = repository.findById(id).orElse(null);
+        if(video == null){
+            return;
+        }
+        this.repository.delete(video);
+    }
+
+    @Override
+    public Video findById(Integer id) {
+        return this.repository.getOne(id);
+    }
+
 }

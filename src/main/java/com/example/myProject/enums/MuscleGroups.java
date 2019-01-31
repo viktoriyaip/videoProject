@@ -3,10 +3,10 @@ package com.example.myProject.enums;
 public enum MuscleGroups {
     LEGS("legs"),
     BACK("back"),
-    CHEST("CHEST"),
-    BICEPS("BICEPS"),
-    TRICEPS("TRICEPS"),
-    ABS("ABS");
+    CHEST("chest"),
+    BICEPS("biceps"),
+    TRICEPS("triceps"),
+    ABS("abs");
 
     private String displayName;
 

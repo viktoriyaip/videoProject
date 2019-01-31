@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -96,13 +97,19 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(HttpSession httpSession){
         httpSession.invalidate();
-        return "redirect:/user/login";
+        return "redirect:/";
     }
 
     @GetMapping("/profile")
-    public ModelAndView profile(ModelAndView modelAndView, HttpSession httpSession){
+    public ModelAndView profile(ModelAndView modelAndView,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        String email = (String) session.getAttribute("email");
 
-        httpSession.getAttribute("username");
+        modelAndView.addObject("username",username);
+        modelAndView.addObject("email",email);
+
+
         modelAndView.setViewName("user/profile");
 
         return modelAndView;
