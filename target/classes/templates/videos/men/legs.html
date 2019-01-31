@@ -32,7 +32,7 @@
                             </div>
                         </th:block>
                         <th:block th:if="${#request.session.getAttribute('role') == 'ADMIN'}">
-                        <a class="btn btn-outline-danger" th:href="@{/videos/delete/{id}(id=${video.id})}" role="button">Delete</a>
+                        <a class="btn btn-outline-danger" style="background-color: #f44336"  th:href="@{/videos/delete/{id}(id=${video.id})}" role="button">Delete</a>
                         </th:block>
                     </td>
 

@@ -71,28 +71,28 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public List<String> videoByGenderAndMuscleGroupWomen(String group) {
-        List<String> videoWomenUrl = new ArrayList<>();
-        List<String> embedUrl = new ArrayList<>();
+    public List<VideoViewModel> videoByGenderAndMuscleGroupWomen(String group) {
+        List<Video> videoWomenUrl = new ArrayList<>();
         List<Video> videos = repository.findAll();
 
         for (Video video : videos) {
             if (video.getCategory().getGender().equals(Gender.WOMEN) &&
                     video.getCategory().getMuscleGroups().getDisplayName().equals(group)) {
-               videoWomenUrl.add(video.getUrl());
+               videoWomenUrl.add(video);
             }
         }
 
         Pattern pattern = Pattern.compile("[a-zA-Z0-9\\_\\-]+$");
 
-        for (String s : videoWomenUrl) {
-            Matcher matcher = pattern.matcher(s);
+        for (Video s : videoWomenUrl) {
+            Matcher matcher = pattern.matcher(s.getUrl());
             matcher.find();
-            embedUrl.add(matcher.group());
+            s.setUrl(matcher.group());
         }
 
-
-        return embedUrl;
+        return videoWomenUrl.stream()
+                .map(x->modelMapper.map(x,VideoViewModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -135,6 +135,29 @@ public class VideoServiceImpl implements VideoService {
         return this.repository.getOne(id);
     }
 
+    @Override
+    public List<List<VideoViewModel>> getVideosAsMatrix(List<VideoViewModel> videoByGenderAndMuscleGroup) {
+        List<List<VideoViewModel>> videos = new ArrayList<>();
 
+        int line = videoByGenderAndMuscleGroup.size()/3;
+        int column = videoByGenderAndMuscleGroup.size()%3;
+        int p =0;
+
+        for (int k = 0; k < line; k++) {
+            List<VideoViewModel> row = new ArrayList<>();
+            for (int l = 0; l < 3 ; l++) {
+                row.add(videoByGenderAndMuscleGroup.get(p));
+                p++;
+            }
+            videos.add(row);
+        }
+        List<VideoViewModel> row = new ArrayList<>();
+        for (int k = column; k >0 ; k--) {
+            row.add(videoByGenderAndMuscleGroup.get(k-1));
+        }
+        videos.add(row);
+
+        return videos;
+    }
 
 }

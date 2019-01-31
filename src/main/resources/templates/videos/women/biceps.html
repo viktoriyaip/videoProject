@@ -19,7 +19,7 @@
                     <td class="col-md-4 text-center">
                         <div class="embed-responsive embed-responsive-16by9 z-depth-1">
                             <iframe class="embed-responsive-item"
-                                    th:src="@{https://www.youtube.com/embed/{url} (url=${video})}"
+                                    th:src="@{https://www.youtube.com/embed/{url} (url=${video.url})}"
                                     style="height: 101%"
                                     allowfullscreen></iframe>
                         </div>
@@ -30,6 +30,9 @@
                                     Add to Favourites
                                 </label>
                             </div>
+                        </th:block>
+                        <th:block th:if="${#request.session.getAttribute('role') == 'ADMIN'}">
+                            <a class="btn btn-outline-danger" style="background-color: #f44336"  th:href="@{/videos/delete/{id}(id=${video.id})}" role="button">Delete</a>
                         </th:block>
                     </td>
 

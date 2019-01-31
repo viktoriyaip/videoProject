@@ -50,45 +50,23 @@ public class VideoController {
         return modelAndView;
 
     }
-//
-//    @GetMapping("/women/{group}")
-//    public ModelAndView viewVideosWomen(@PathVariable(name = "group") String group, ModelAndView modelAndView){
-//
-//        List<List<VideoViewModel>> videosWomen = getVideosAsMatrix(videoService.videoByGenderAndMuscleGroupWomen(group));
-//        modelAndView.addObject("videosWomen", videosWomen);
-//        modelAndView.setViewName("videos/women/" + group);
-//
-//        return modelAndView;
-//    }
 
-    private List<List<VideoViewModel>> getVideosAsMatrix(List<VideoViewModel> videoByGenderAndMuscleGroup) {
-        List<List<VideoViewModel>> videos = new ArrayList<>();
+    @GetMapping("/women/{group}")
+    public ModelAndView viewVideosWomen(@PathVariable(name = "group") String group, ModelAndView modelAndView){
 
-        int line = videoByGenderAndMuscleGroup.size()/3;
-        int column = videoByGenderAndMuscleGroup.size()%3;
-        int p =0;
+        List<List<VideoViewModel>> videosWomen = videoService.getVideosAsMatrix(videoService.videoByGenderAndMuscleGroupWomen(group));
+        modelAndView.addObject("videosWomen", videosWomen);
+        modelAndView.setViewName("videos/women/" + group);
 
-        for (int k = 0; k < line; k++) {
-            List<VideoViewModel> row = new ArrayList<>();
-            for (int l = 0; l < 3 ; l++) {
-                row.add(videoByGenderAndMuscleGroup.get(p));
-                p++;
-            }
-            videos.add(row);
-        }
-        List<VideoViewModel> row = new ArrayList<>();
-        for (int k = column; k >0 ; k--) {
-            row.add(videoByGenderAndMuscleGroup.get(k-1));
-        }
-            videos.add(row);
-
-        return videos;
+        return modelAndView;
     }
+
+
 
     @GetMapping("/men/{group}")
     public ModelAndView viewVideosMen(@PathVariable(name = "group") String group, ModelAndView modelAndView){
 
-        List<List<VideoViewModel>> videosMen = getVideosAsMatrix(videoService.videoByGenderAndMuscleGroupMen(group));
+        List<List<VideoViewModel>> videosMen = videoService.getVideosAsMatrix(videoService.videoByGenderAndMuscleGroupMen(group));
         modelAndView.addObject("videosMen", videosMen);
         modelAndView.setViewName("videos/men/" + group);
 
@@ -125,5 +103,7 @@ public class VideoController {
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
+
+
 
 }

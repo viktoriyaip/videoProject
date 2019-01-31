@@ -4,6 +4,8 @@ import com.example.myProject.bindingModel.UserBindingModel;
 import com.example.myProject.bindingModel.UserLoginBindingModel;
 import com.example.myProject.entities.User;
 import com.example.myProject.services.UserService;
+import com.example.myProject.services.VideoService;
+import com.example.myProject.viewModel.VideoViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -101,7 +103,9 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public ModelAndView profile(ModelAndView modelAndView,HttpServletRequest request){
+    public ModelAndView profile(ModelAndView modelAndView, HttpServletRequest request){
+
+
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
         String email = (String) session.getAttribute("email");

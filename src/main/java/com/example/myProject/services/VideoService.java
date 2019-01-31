@@ -13,10 +13,10 @@ public interface VideoService {
     Video findByUrl(String url);
     void createVideo(VideoCreateBindingModel model);
     boolean saveVideo(VideoCreateBindingModel videoCreateBindingModel, String username);
-    List<String> videoByGenderAndMuscleGroupWomen(String group);
+    List<VideoViewModel> videoByGenderAndMuscleGroupWomen(String group);
     List<VideoViewModel> videoByGenderAndMuscleGroupMen(String group);
     public void deleteVideo(Integer id);
-
+    public List<List<VideoViewModel>> getVideosAsMatrix(List<VideoViewModel> videoByGenderAndMuscleGroup);
     Video findById(Integer id);
 
 }
