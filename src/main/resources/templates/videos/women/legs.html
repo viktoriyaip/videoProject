@@ -23,15 +23,17 @@
                                     style="height: 101%"
                                     allowfullscreen></iframe>
                         </div>
-                        <th:block th:if="${#request.session.getAttribute('userId')}">
-                            <div class="checkbox checkbox-danger">
-                                <input id="checkbox6" type="checkbox">
-                                <label for="checkbox6">
-                                    Add to Favourites
-                                </label>
-                            </div>
-                        </th:block>
-                        <button type="button" class="btn btn-danger" th:method="POST" th:href=@{videos/delete}">Delete</button>
+                        <!--<th:block th:if="${#request.session.getAttribute('userId')}">-->
+                            <!--<div class="checkbox checkbox-danger">-->
+                                <!--<input id="checkbox6" type="checkbox">-->
+                                <!--<label for="checkbox6">-->
+                                    <!--Add to Favourites-->
+                                <!--</label>-->
+                            <!--</div>-->
+                        <!--</th:block>-->
+                        <!--<th:block th:each="vid : ${deleteVid}">-->
+                        <!--<a class="btn btn-outline-danger" th:href="@{/videos/delete/{id}(id=${vid.id})}" role="button">Delete</a>-->
+                        <!--</th:block>-->
                     </td>
             </th:block>
             </tr>

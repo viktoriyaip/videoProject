@@ -99,4 +99,5 @@ public class User implements Serializable {
     public void setVideos(List<Video> videos) {
         this.videos = videos;
     }
+
 }

@@ -2,10 +2,12 @@ package com.example.myProject.controllers;
 
 import com.example.myProject.bindingModel.VideoCreateBindingModel;
 import com.example.myProject.custom.PreAuthenticate;
+import com.example.myProject.entities.Video;
 import com.example.myProject.enums.Gender;
 import com.example.myProject.enums.MuscleGroups;
 import com.example.myProject.services.CategoryService;
 import com.example.myProject.services.VideoService;
+import com.example.myProject.viewModel.VideoViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,33 +50,33 @@ public class VideoController {
         return modelAndView;
 
     }
+//
+//    @GetMapping("/women/{group}")
+//    public ModelAndView viewVideosWomen(@PathVariable(name = "group") String group, ModelAndView modelAndView){
+//
+//        List<List<VideoViewModel>> videosWomen = getVideosAsMatrix(videoService.videoByGenderAndMuscleGroupWomen(group));
+//        modelAndView.addObject("videosWomen", videosWomen);
+//        modelAndView.setViewName("videos/women/" + group);
+//
+//        return modelAndView;
+//    }
 
-    @GetMapping("/women/{group}")
-    public ModelAndView viewVideosWomen(@PathVariable(name = "group") String group, ModelAndView modelAndView){
-
-        List<List<String>> videosWomen = getVideosAsMatrix(videoService.videoByGenderAndMuscleGroupWomen(group));
-        modelAndView.addObject("videosWomen", videosWomen);
-        modelAndView.setViewName("videos/women/" + group);
-
-        return modelAndView;
-    }
-
-    private List<List<String>> getVideosAsMatrix(List<String> videoByGenderAndMuscleGroup) {
-        List<List<String>> videos = new ArrayList<>();
+    private List<List<VideoViewModel>> getVideosAsMatrix(List<VideoViewModel> videoByGenderAndMuscleGroup) {
+        List<List<VideoViewModel>> videos = new ArrayList<>();
 
         int line = videoByGenderAndMuscleGroup.size()/3;
         int column = videoByGenderAndMuscleGroup.size()%3;
         int p =0;
 
         for (int k = 0; k < line; k++) {
-            List<String> row = new ArrayList<>();
+            List<VideoViewModel> row = new ArrayList<>();
             for (int l = 0; l < 3 ; l++) {
                 row.add(videoByGenderAndMuscleGroup.get(p));
                 p++;
             }
             videos.add(row);
         }
-        List<String> row = new ArrayList<>();
+        List<VideoViewModel> row = new ArrayList<>();
         for (int k = column; k >0 ; k--) {
             row.add(videoByGenderAndMuscleGroup.get(k-1));
         }
@@ -86,7 +88,7 @@ public class VideoController {
     @GetMapping("/men/{group}")
     public ModelAndView viewVideosMen(@PathVariable(name = "group") String group, ModelAndView modelAndView){
 
-        List<List<String>> videosMen = getVideosAsMatrix(videoService.videoByGenderAndMuscleGroupMen(group));
+        List<List<VideoViewModel>> videosMen = getVideosAsMatrix(videoService.videoByGenderAndMuscleGroupMen(group));
         modelAndView.addObject("videosMen", videosMen);
         modelAndView.setViewName("videos/men/" + group);
 
@@ -114,9 +116,9 @@ public class VideoController {
         return modelAndView;
     }
 
-    @PostMapping("/delete")
+    @GetMapping("/delete/{id}")
     @PreAuthenticate(inRole = "ADMIN")
-    public ModelAndView deleteVideoConfirm(ModelAndView modelAndView, Integer id){
+    public ModelAndView deleteVideoConfirm(ModelAndView modelAndView, @PathVariable(name = "id") Integer id){
 
         this.videoService.deleteVideo(id);
 
