@@ -6,6 +6,7 @@ import com.example.myProject.entities.User;
 import com.example.myProject.entities.Video;
 import com.example.myProject.enums.Gender;
 import com.example.myProject.repositories.CategoryRepository;
+import com.example.myProject.repositories.UserRepository;
 import com.example.myProject.repositories.VideoRepository;
 import com.example.myProject.viewModel.VideoViewModel;
 import org.modelmapper.ModelMapper;
@@ -25,15 +26,19 @@ public class VideoServiceImpl implements VideoService {
     VideoRepository repository;
     CategoryRepository categoryRepository;
     ModelMapper modelMapper;
+    UserRepository userRepository;
 
 
 
     @Autowired
-    public VideoServiceImpl(UserService userService, VideoRepository repository, CategoryRepository categoryRepository, ModelMapper modelMapper) {
+    public VideoServiceImpl(UserService userService, VideoRepository repository,
+                            CategoryRepository categoryRepository,
+                            ModelMapper modelMapper, UserRepository userRepository) {
         this.userService = userService;
         this.repository = repository;
         this.categoryRepository = categoryRepository;
         this.modelMapper = modelMapper;
+        this.userRepository = userRepository;
 
     }
 
@@ -158,6 +163,29 @@ public class VideoServiceImpl implements VideoService {
         videos.add(row);
 
         return videos;
+    }
+
+    @Override
+    public VideoViewModel addToFavorites(Integer id,String username) {
+        User user =this.userService.findByUsername(username);
+        Video favVideos = null;
+        List<Video> vid = repository.findAll();
+
+        for (Video video : vid) {
+            if(video.getId().equals(this.repository.getOne(id).getId())){
+                Pattern pattern = Pattern.compile("[a-zA-Z0-9\\_\\-]+$");
+                Matcher matcher = pattern.matcher(video.getUrl());
+                matcher.find();
+                video.setUrl(matcher.group());
+                favVideos = video;
+            }
+        }
+        String temp = user.getFavourites();
+        temp = temp + id + "/";
+        user.setFavourites(temp);
+        userRepository.save(user);
+
+        return modelMapper.map(favVideos, VideoViewModel.class);
     }
 
 }

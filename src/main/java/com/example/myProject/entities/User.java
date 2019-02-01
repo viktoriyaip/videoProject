@@ -29,8 +29,8 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany
-    List<Video> videos;
+
+    String favourites;
 
     public  User(){
     }
@@ -92,12 +92,11 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public List<Video> getVideos() {
-        return videos;
+    public String getFavourites() {
+        return favourites;
     }
 
-    public void setVideos(List<Video> videos) {
-        this.videos = videos;
+    public void setFavourites(String favourites) {
+        this.favourites= favourites;
     }
-
 }

@@ -18,5 +18,5 @@ public interface VideoService {
     public void deleteVideo(Integer id);
     public List<List<VideoViewModel>> getVideosAsMatrix(List<VideoViewModel> videoByGenderAndMuscleGroup);
     Video findById(Integer id);
-
+    public VideoViewModel addToFavorites(Integer id,String username);
 }

@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService{
         user.setUsername(userBindingModel.getUsername());
         user.setPassword(userBindingModel.getPassword());
         user.setEmail(userBindingModel.getEmail());
+        user.setFavourites("");
 
         if(this.repository.findAll().size() == 0){
             user.setRole(Role.ADMIN);
@@ -67,4 +68,5 @@ public class UserServiceImpl implements UserService{
     public Integer getUserId(UserLoginBindingModel user) {
         return repository.findByUsername(user.getUsername()).getId();
     }
+
 }

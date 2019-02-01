@@ -96,14 +96,28 @@ public class VideoController {
 
     @GetMapping("/delete/{id}")
     @PreAuthenticate(inRole = "ADMIN")
-    public ModelAndView deleteVideoConfirm(ModelAndView modelAndView, @PathVariable(name = "id") Integer id){
+    public ModelAndView deleteVideoConfirm(ModelAndView modelAndView, @PathVariable(name = "id") Integer id, HttpSession session){
 
-        this.videoService.deleteVideo(id);
+//        this.videoService.deleteVideo(id);
+        String username= (String) session.getAttribute("username");
+        VideoViewModel favorites = this.videoService.addToFavorites(id, username);
 
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 
+    @GetMapping("/addFavourites/{id}")
+    @PreAuthenticate
+    public ModelAndView addFavourites(ModelAndView modelAndView, @PathVariable(name = "id") Integer id , HttpSession session){
+
+        String username= (String) session.getAttribute("username");
+        VideoViewModel favorites = this.videoService.addToFavorites(id, username);
+        modelAndView.addObject("favorites", favorites);
+
+        modelAndView.setViewName("redirect:/user/profile");
+
+        return modelAndView;
+    }
 
 
 }
