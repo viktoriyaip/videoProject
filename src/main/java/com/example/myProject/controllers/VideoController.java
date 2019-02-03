@@ -8,6 +8,7 @@ import com.example.myProject.services.VideoService;
 import com.example.myProject.viewModel.VideoViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,8 +83,16 @@ public class VideoController {
     @PostMapping("/add")
     @PreAuthenticate(inRole = "ADMIN")
     public ModelAndView addVideoConfirmation(ModelAndView modelAndView, HttpSession httpSession,
-                                             @Valid VideoCreateBindingModel videoCreateBindingModel){
+                                             @Valid VideoCreateBindingModel videoCreateBindingModel,
+                                             BindingResult bindingResult){
 
+        if(bindingResult.hasErrors()){
+            modelAndView.addObject("groups", MuscleGroups.values());
+            modelAndView.addObject("gender", Gender.values());
+            modelAndView.addObject("videoModel",VideoCreateBindingModel.class);
+            modelAndView.setViewName("videos/add");
+            return modelAndView;
+        }
         videoService.createVideo(videoCreateBindingModel);
         modelAndView.setViewName("redirect:/");
         return modelAndView;

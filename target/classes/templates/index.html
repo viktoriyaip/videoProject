@@ -2,15 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/head"></th:block>
-    <style>
-body {
-  background-image: url("http://newyoufitness.ie/wp-content/uploads/2016/06/Male-Fitness-Models-Background-Image1.jpg");
-  background-position: 50% 20%;
-  background-repeat: repeat;
-}
-</style>
+    <!--<style>-->
+<!--&lt;!&ndash;body {&ndash;&gt;-->
+  <!--&lt;!&ndash;background-image: url("http://newyoufitness.ie/wp-content/uploads/2016/06/Male-Fitness-Models-Background-Image1.jpg");&ndash;&gt;-->
+  <!--&lt;!&ndash;background-position: 50% 20%;&ndash;&gt;-->
+  <!--&lt;!&ndash;background-repeat: repeat;&ndash;&gt;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+<!--</style>-->
 </head>
-<body>
+<body  th:style="'background :url(' + @{/images/Male-Fitness-Models-Background-Image1.jpg} + ')'"
+       class=" background-position: 50% 20%;   background-repeat: repeat; ">
 <header th:include="fragments/header"></header>
 <main>
     <section class="page-bg">

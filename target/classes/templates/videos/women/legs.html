@@ -24,10 +24,10 @@
                                     allowfullscreen></iframe>
                         </div>
                         <th:block th:if="${#request.session.getAttribute('role') == 'ADMIN'}">
-                            <a class="btn" style="background-color: #f44336" th:href="@{/videos/delete/{id}(id=${video.id})}"role="button">Delete</a>
+                            <a class="btn btn-outline-danger mt-2" style="background-color: #f44336" th:href="@{/videos/delete/{id}(id=${video.id})}"role="button">Delete</a>
                         </th:block>
                         <th:block th:if="${#request.session.getAttribute('role') == 'USER'}">
-                            <a class="btn" th:href="@{/videos//addFavourites/{id}(id=${video.id})}"role="button">Save</a>
+                            <a class="btn mt-2" th:href="@{/videos//addFavourites/{id}(id=${video.id})}"role="button">Save</a>
                         </th:block>
                     </td>
             </th:block>
