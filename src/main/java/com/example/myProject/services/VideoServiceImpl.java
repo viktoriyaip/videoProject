@@ -43,16 +43,6 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public List<Video> findAll() {
-        return repository.findAll();
-    }
-
-    @Override
-    public Video findByUrl(String url) {
-        return repository.findByUrl(url);
-    }
-
-    @Override
     public void createVideo(VideoCreateBindingModel model) {
         Video video = modelMapper.map(model, Video.class);
         List<Category> videoGroup = categoryRepository.findAll();
@@ -63,16 +53,6 @@ public class VideoServiceImpl implements VideoService {
             }
         }
         repository.save(video);
-    }
-
-    @Override
-    public boolean saveVideo(VideoCreateBindingModel videoCreateBindingModel, String username) {
-        User user = this.userService.findByUsername(username);
-        if (user == null) {
-            return false;
-        }
-        Video videoEntity = modelMapper.map(videoCreateBindingModel, Video.class);
-        return this.repository.save(videoEntity) != null;
     }
 
     @Override
@@ -146,20 +126,26 @@ public class VideoServiceImpl implements VideoService {
 
         int line = videoByGenderAndMuscleGroup.size()/3;
         int column = videoByGenderAndMuscleGroup.size()%3;
-        int p =0;
+        int p = 0;
+        int count = 0;
 
         for (int k = 0; k < line; k++) {
             List<VideoViewModel> row = new ArrayList<>();
             for (int l = 0; l < 3 ; l++) {
                 row.add(videoByGenderAndMuscleGroup.get(p));
                 p++;
+                count = p;
             }
             videos.add(row);
         }
+
+
         List<VideoViewModel> row = new ArrayList<>();
         for (int k = column; k >0 ; k--) {
-            row.add(videoByGenderAndMuscleGroup.get(k-1));
+            row.add(videoByGenderAndMuscleGroup.get(count));
+            count++;
         }
+
         videos.add(row);
 
         return videos;

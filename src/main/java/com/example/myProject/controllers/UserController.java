@@ -3,7 +3,6 @@ package com.example.myProject.controllers;
 import com.example.myProject.bindingModel.UserBindingModel;
 import com.example.myProject.bindingModel.UserLoginBindingModel;
 import com.example.myProject.entities.User;
-import com.example.myProject.entities.Video;
 import com.example.myProject.services.UserService;
 import com.example.myProject.services.VideoService;
 import com.example.myProject.viewModel.VideoViewModel;
@@ -20,11 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+
 
 @Controller
 @RequestMapping("/user")
@@ -114,7 +110,7 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public ModelAndView profile(ModelAndView modelAndView, HttpServletRequest request,UserBindingModel userBindingModel){
+    public ModelAndView profile(ModelAndView modelAndView, HttpServletRequest request){
 
                 HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
@@ -125,29 +121,9 @@ public class UserController {
 
         User userDataBase = userService.findByUsername(username);
         String favIDs = userDataBase.getFavourites();
+
         if(!favIDs.equals("")) {
-            String[] ids = favIDs.split("/");
-            List<Video> videos = new ArrayList<>();
-
-
-            for (String id : ids) {
-                Integer x = Integer.valueOf(id);
-                videos.add(videoService.findById(x));
-            }
-
-
-            for (Video video : videos) {
-                Pattern pattern = Pattern.compile("[a-zA-Z0-9\\_\\-]+$");
-                Matcher matcher = pattern.matcher(video.getUrl());
-                matcher.find();
-                video.setUrl(matcher.group());
-            }
-
-            List<VideoViewModel> videoViewModels = videos.stream()
-                    .map(x -> modelMapper.map(x, VideoViewModel.class))
-                    .collect(Collectors.toList());
-
-
+            List<VideoViewModel> videoViewModels = userService.addVideosToFavourites(favIDs, videoService);
             modelAndView.addObject("videoViewModels", videoViewModels);
         }
 

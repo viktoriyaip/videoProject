@@ -2,10 +2,8 @@ package com.example.myProject.controllers;
 
 import com.example.myProject.bindingModel.VideoCreateBindingModel;
 import com.example.myProject.custom.PreAuthenticate;
-import com.example.myProject.entities.Video;
 import com.example.myProject.enums.Gender;
 import com.example.myProject.enums.MuscleGroups;
-import com.example.myProject.services.CategoryService;
 import com.example.myProject.services.VideoService;
 import com.example.myProject.viewModel.VideoViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,12 +23,10 @@ import java.util.List;
 @RequestMapping("/videos")
 public class VideoController {
     VideoService videoService;
-    CategoryService categoryService;
 
     @Autowired
-    public VideoController(VideoService videoService, CategoryService categoryService){
+    public VideoController(VideoService videoService){
         this.videoService = videoService;
-        this.categoryService = categoryService;
     }
 
     @GetMapping("/women")
@@ -98,9 +93,7 @@ public class VideoController {
     @PreAuthenticate(inRole = "ADMIN")
     public ModelAndView deleteVideoConfirm(ModelAndView modelAndView, @PathVariable(name = "id") Integer id, HttpSession session){
 
-//        this.videoService.deleteVideo(id);
-        String username= (String) session.getAttribute("username");
-        VideoViewModel favorites = this.videoService.addToFavorites(id, username);
+        this.videoService.deleteVideo(id);
 
         modelAndView.setViewName("redirect:/");
         return modelAndView;

@@ -2,29 +2,31 @@ package com.example.myProject.services;
 
 import com.example.myProject.bindingModel.UserBindingModel;
 import com.example.myProject.bindingModel.UserLoginBindingModel;
+import com.example.myProject.entities.Video;
 import com.example.myProject.enums.Role;
 import com.example.myProject.entities.User;
 import com.example.myProject.repositories.UserRepository;
+import com.example.myProject.viewModel.VideoViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService{
     UserRepository repository;
     ModelMapper modelMapper;
 
+
     @Autowired
     public UserServiceImpl(UserRepository repository,ModelMapper modelMapper) {
         this.repository = repository;
         this.modelMapper = modelMapper;
-    }
-
-    @Override
-    public List<User> findAll() {
-        return repository.findAll();
     }
 
     @Override
@@ -65,8 +67,29 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Integer getUserId(UserLoginBindingModel user) {
-        return repository.findByUsername(user.getUsername()).getId();
-    }
+    public List<VideoViewModel> addVideosToFavourites(String favIds, VideoService videoService) {
+        String[] ids = favIds.split("/");
+        List<Video> videos = new ArrayList<>();
 
+
+        for (String id : ids) {
+            Integer x = Integer.valueOf(id);
+            videos.add(videoService.findById(x));
+        }
+
+
+        for (Video video : videos) {
+            Pattern pattern = Pattern.compile("[a-zA-Z0-9\\_\\-]+$");
+            Matcher matcher = pattern.matcher(video.getUrl());
+            matcher.find();
+            video.setUrl(matcher.group());
+        }
+
+        List<VideoViewModel> videoViewModels = videos.stream()
+                .map(x -> modelMapper.map(x, VideoViewModel.class))
+                .collect(Collectors.toList());
+
+        return  videoViewModels;
+
+    }
 }
